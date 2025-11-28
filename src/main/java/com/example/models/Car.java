@@ -1,150 +1,51 @@
 package com.example.models;
 
-import java.math.BigDecimal;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
+@Entity
+@Table(name = "cars")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Car {
-    private Long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, unique = true)
     private String barcode;
+
+    @Column(name = "license_plate_number")
     private String licensePlateNumber;
+
+    @Column(name = "number_of_seats")
     private Integer numberOfSeats;
+
     private String brand;
     private String model;
     private Double mileage;
-    private BigDecimal dailyPrice;
+
+    @Column(name = "daily_price")
+    private Double dailyPrice;
+
     private String category;
 
-    // enum feilds
+    @Enumerated(EnumType.STRING)
     private CarStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transmission_type")
     private TransmissionType transmissionType;
 
-    // rel
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
     private Location location;
+
+    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
-
-    // constructors
-    public Car() {
-
-    }
-
-    public Car(Long id, String barcode, String licensePlateNumber, Integer numberOfSeats, String brand, String model, Double mileage, BigDecimal dailyPrice, String category, CarStatus status, TransmissionType transmissionType, Location location, List<Reservation> reservations) {
-        this.id = id;
-        this.barcode = barcode;
-        this.licensePlateNumber = licensePlateNumber;
-        this.numberOfSeats = numberOfSeats;
-        this.brand = brand;
-        this.model = model;
-        this.mileage = mileage;
-        this.dailyPrice = dailyPrice;
-        this.category = category;
-        this.status = status;
-        this.transmissionType = transmissionType;
-        this.location = location;
-        this.reservations = reservations;
-    }
-
-    // getters & setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public String getLicensePlateNumber() {
-        return licensePlateNumber;
-    }
-
-    public void setLicensePlateNumber(String licensePlateNumber) {
-        this.licensePlateNumber = licensePlateNumber;
-    }
-
-    public Integer getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(Integer numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Double getMileage() {
-        return mileage;
-    }
-
-    public void setMileage(Double mileage) {
-        this.mileage = mileage;
-    }
-
-    public BigDecimal getDailyPrice() {
-        return dailyPrice;
-    }
-
-    public void setDailyPrice(BigDecimal dailyPrice) {
-        this.dailyPrice = dailyPrice;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public CarStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(CarStatus status) {
-        this.status = status;
-    }
-
-    public TransmissionType getTransmissionType() {
-        return transmissionType;
-    }
-
-    public void setTransmissionType(TransmissionType transmissionType) {
-        this.transmissionType = transmissionType;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
 }

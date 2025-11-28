@@ -1,56 +1,28 @@
 package com.example.models;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Entity
+@Table(name = "extras")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Extra {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
     private BigDecimal price;
 
-    //rel
+    @ManyToMany(mappedBy = "extras", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
-
-    // constructors
-    public Extra() {}
-
-    public Extra(Long id, String name, BigDecimal price, List<Reservation> reservations) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.reservations = reservations;
-    }
-
-    // getters && setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
 }

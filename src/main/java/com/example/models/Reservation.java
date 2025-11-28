@@ -1,138 +1,62 @@
 package com.example.models;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
+@Table(name = "reservations")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reservation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "reservation_number", length = 8, unique = true, nullable = false)
     private String reservationNumber;
+
+    @Column(name = "creation_date")
     private LocalDateTime creationDate;
+
+    @Column(name = "pickup_date_time")
     private LocalDateTime pickupDateTime;
+
+    @Column(name = "dropoff_date_time")
     private LocalDateTime dropoffDateTime;
+
+    @Column(name = "return_date")
     private LocalDateTime returnDate;
 
-    // enum field
+    @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    // relationships
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id", nullable = false)
     private Car car;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pickup_location_id")
     private Location pickupLocation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dropoff_location_id")
     private Location dropoffLocation;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "reservation_extras",
+            joinColumns = @JoinColumn(name = "reservation_id"),
+            inverseJoinColumns = @JoinColumn(name = "extra_id")
+    )
     private List<Extra> extras;
-
-    // constructors
-    public Reservation() {}
-
-    public Reservation(Long id, String reservationNumber, LocalDateTime creationDate, LocalDateTime pickupDateTime, LocalDateTime dropoffDateTime, LocalDateTime returnDate, ReservationStatus status, Member member, Car car, Location pickupLocation, Location dropoffLocation, List<Extra> extras) {
-        this.id = id;
-        this.reservationNumber = reservationNumber;
-        this.creationDate = creationDate;
-        this.pickupDateTime = pickupDateTime;
-        this.dropoffDateTime = dropoffDateTime;
-        this.returnDate = returnDate;
-        this.status = status;
-        this.member = member;
-        this.car = car;
-        this.pickupLocation = pickupLocation;
-        this.dropoffLocation = dropoffLocation;
-        this.extras = extras;
-    }
-
-    // getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getReservationNumber() {
-        return reservationNumber;
-    }
-
-    public void setReservationNumber(String reservationNumber) {
-        this.reservationNumber = reservationNumber;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public LocalDateTime getPickupDateTime() {
-        return pickupDateTime;
-    }
-
-    public void setPickupDateTime(LocalDateTime pickupDateTime) {
-        this.pickupDateTime = pickupDateTime;
-    }
-
-    public LocalDateTime getDropoffDateTime() {
-        return dropoffDateTime;
-    }
-
-    public void setDropoffDateTime(LocalDateTime dropoffDateTime) {
-        this.dropoffDateTime = dropoffDateTime;
-    }
-
-    public LocalDateTime getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(LocalDateTime returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public ReservationStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ReservationStatus status) {
-        this.status = status;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public Location getPickupLocation() {
-        return pickupLocation;
-    }
-
-    public void setPickupLocation(Location pickupLocation) {
-        this.pickupLocation = pickupLocation;
-    }
-
-    public Location getDropoffLocation() {
-        return dropoffLocation;
-    }
-
-    public void setDropoffLocation(Location dropoffLocation) {
-        this.dropoffLocation = dropoffLocation;
-    }
-
-    public List<Extra> getExtras() {
-        return extras;
-    }
-
-    public void setExtras(List<Extra> extras) {
-        this.extras = extras;
-    }
 }
