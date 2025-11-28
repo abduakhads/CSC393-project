@@ -1,4 +1,4 @@
-package com.example.csc399projectapi.models;
+package com.example.models;
 
 public enum CarStatus {
     AVAILABLE,
