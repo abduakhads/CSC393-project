@@ -1,4 +1,4 @@
-package com.example.csc399projectapi.domain;
+package com.example.csc399projectapi.models;
 
 import java.math.BigDecimal;
 import java.util.List;

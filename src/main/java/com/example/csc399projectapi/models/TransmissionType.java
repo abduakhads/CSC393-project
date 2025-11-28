@@ -1,4 +1,4 @@
-package com.example.csc399projectapi.domain;
+package com.example.csc399projectapi.models;
 
 public enum TransmissionType {
     AUTOMATIC,

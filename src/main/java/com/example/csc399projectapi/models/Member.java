@@ -1,4 +1,4 @@
-package com.example.csc399projectapi.domain;
+package com.example.csc399projectapi.models;
 import java.util.List;
 
 public class Member {
