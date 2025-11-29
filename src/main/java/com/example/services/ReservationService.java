@@ -9,4 +9,12 @@ public interface ReservationService {
     Optional<Reservation> getReservationByNumber(String reservationNumber);
     Reservation createReservation(Reservation reservation);
     boolean cancelReservation(String reservationNumber);
+
+    List<Reservation> getActiveReservations();
+
+    boolean returnCar(String reservationNumber);
+
+    boolean addExtraToReservation(String reservationNumber, Long extraId);
+
+    boolean deleteReservation(String reservationNumber);
 }
