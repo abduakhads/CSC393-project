@@ -1,7 +1,6 @@
 package com.example.services;
 
 import com.example.models.Car;
-import org.springframework.stereotype.Service;
 import com.example.models.TransmissionType;
 
 import java.util.List;
