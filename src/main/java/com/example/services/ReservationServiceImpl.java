@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -51,6 +52,11 @@ public class ReservationServiceImpl implements ReservationService {
         // checkin the car is linked correctly
         reservation.setCar(car);
 
+        // Ensuring list is not null on create
+        if (reservation.getExtras() == null) {
+            reservation.setExtras(new ArrayList<>());
+        }
+
         return reservationRepository.save(reservation);
     }
 
@@ -75,7 +81,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getActiveReservations() {
-        // service 3
         return reservationRepository.findAllByStatus(ReservationStatus.ACTIVE);
     }
 
@@ -111,6 +116,11 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation res = resOpt.get();
         Extra extra = extraOpt.get();
 
+        // Initializing list if it is null
+        if (res.getExtras() == null) {
+            res.setExtras(new ArrayList<>());
+        }
+
         // checking if already added
         if (res.getExtras().contains(extra)) return false;
 
@@ -132,11 +142,14 @@ public class ReservationServiceImpl implements ReservationService {
         res.setMember(null);
         res.setPickupLocation(null);
         res.setDropoffLocation(null);
-        res.getExtras().clear();
+
+        // Null check before clear
+        if (res.getExtras() != null) {
+            res.getExtras().clear();
+        }
 
         reservationRepository.save(res);
         reservationRepository.delete(res);
         return true;
     }
-
 }

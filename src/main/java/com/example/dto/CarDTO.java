@@ -3,7 +3,6 @@ package com.example.dto;
 import com.example.models.CarStatus;
 import com.example.models.TransmissionType;
 import lombok.Data;
-import java.math.BigDecimal;
 
 @Data
 public class CarDTO {
